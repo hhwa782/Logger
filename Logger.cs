@@ -47,7 +47,28 @@ namespace ClientProgram
         public static string filePath()
         {
             string logDir = Path.Combine(Environment.CurrentDirectory, "Log", DateTime.Now.ToString("yyyy-MM"));
-            string logFile = Path.Combine(logDir, DateTime.Now.ToString("dd-HH") + ".txt");
+            string logFile;
+
+            int hourNow = Convert.ToInt32(DateTime.Now.ToString("HH"));
+            int hourPath = 0;
+
+            if (hourNow % 3 == 0)
+            {
+                hourPath = hourNow;
+            }
+            else if (hourNow % 3 == 1 || hourNow % 3 == 2)
+            {
+                if ((hourNow - 1) % 3 == 0)
+                {
+                    hourPath = hourNow - 1;
+                }
+                if ((hourNow - 2) % 3 == 0)
+                {
+                    hourPath = hourNow - 2;
+                }
+            }
+
+            logFile = Path.Combine(logDir, DateTime.Now.ToString("dd-") + hourPath + ".txt");
 
             return logFile;
         }
